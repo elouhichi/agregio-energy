@@ -24,7 +24,7 @@ Ce projet est un test technique visant à modéliser et exposer des APIs REST po
 
 1. Cloner le repo :
 
-TODO
+   https://github.com/elouhichi/agregio-energy.git
 
 2. lancer le projet :
 
