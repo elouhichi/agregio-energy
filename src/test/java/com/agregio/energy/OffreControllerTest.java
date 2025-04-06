@@ -1,5 +1,9 @@
 package com.agregio.energy;
 
+import com.agregio.energy.model.Parc;
+import com.agregio.energy.model.TypeParc;
+import com.agregio.energy.repository.ParcRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -17,6 +21,18 @@ public class OffreControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
+
+    @Autowired
+    ParcRepository parcRepository;
+
+    @BeforeEach
+    void setUp() {
+        Parc parc = new Parc();
+        parc.setNom("Parc 1");
+        parc.setType(TypeParc.SOLAIRE);
+        parc.setCapacite(100.0);
+        parcRepository.save(parc); // ID auto-généré : 1
+    }
 
     @Test
     void createOffre() throws Exception {

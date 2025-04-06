@@ -2,12 +2,13 @@ package com.agregio.energy.service;
 
 import com.agregio.energy.dto.BlocDto;
 import com.agregio.energy.dto.OffreDto;
+import com.agregio.energy.mapper.OffreMapper;
 import com.agregio.energy.model.*;
 import com.agregio.energy.repository.OffreRepository;
 import com.agregio.energy.repository.ParcRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -19,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class OffreServiceTest {
-    @InjectMocks
+
     private OffreService offreService;
 
     @Mock
@@ -27,6 +28,15 @@ public class OffreServiceTest {
 
     @Mock
     private ParcRepository parcRepository;
+
+    @Mock
+    private OffreMapper offreMapper;
+
+
+    @BeforeEach
+    void setUp() {
+        offreService = new OffreService(offreRepository, offreMapper, parcRepository);
+    }
 
     @Test
     void createOffreSuccess() {
@@ -39,6 +49,8 @@ public class OffreServiceTest {
 
         when(parcRepository.findAllById(List.of(1L))).thenReturn(List.of(parc));
         when(offreRepository.save(any(Offre.class))).thenReturn(savedOffre);
+        when(offreMapper.toEntity(any())).thenReturn(savedOffre);
+        when(offreMapper.toDto(any())).thenReturn(offreDto);
 
         OffreDto result = offreService.createOffre(offreDto);
 
